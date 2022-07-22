@@ -4,3 +4,10 @@ class Vocabulary:
         self.added_date = added_date
         self.last_used_date = added_date
         self.times_used = 0
+        self.times_correct = 0
+        self.times_incorrect = 0
+
+    
+
+
+
