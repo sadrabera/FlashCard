@@ -38,18 +38,38 @@ def add_vocabulary():
     meaning = input("Enter meaning of the word: ")
     added_date = datetime.now()
     new_vocabulary = Vocabulary(word, meaning, added_date)
-    all_vocabs.append(new_vocabulary)
-    print("Vocabulary added successfully!")
+    if new_vocabulary in all_vocabs:
+        print("\u001b[31mThis word is already in the list!\u001b[0m")
+    else:
+        all_vocabs.append(new_vocabulary)
+        print("\u001b[35mVocabulary added successfully!\u001b[0m")
+    input_any_key()
+
+
+def change_meaning():
+    word = input("Enter the word: ")
+    for every_vocabulary in all_vocabs:
+        if every_vocabulary.word == word:
+            every_vocabulary.meaning = input("Enter new meaning: ")
+            print("\u001b[35mMeaning changed successfully!\u001b[0m")
+            input_any_key()
+            return
+    print("\u001b[31mWord not found!\u001b[0m")
     input_any_key()
 
 
 def remove_vocabulary():
-    vocab = input("Enter it's word: ")
+    remove_flag = False
+    vocab = input("Enter its word: ")
     for every_vocabulary in all_vocabs[:]:
         if every_vocabulary.word == vocab:
             all_vocabs.remove(every_vocabulary)
+            remove_flag = True
             break
-    print("Vocabulary removed successfully!")
+    if remove_flag:
+        print("\u001b[35mVocabulary removed successfully!\u001b[0m")
+    else:
+        print("\u001b[31mVocabulary not found!\u001b[0m")
     input_any_key()
 
 
@@ -108,7 +128,7 @@ def printing_underline():
 
 if __name__ == '__main__':
     print()
-    print(""" \u001b[36m  
+    print(""" \u001b[36;1m 
                                                                                     
 I8,        8        ,8I            88                                               
 `8b       d8b       d8'            88                                               
@@ -157,7 +177,8 @@ I8,        8        ,8I            88
         print('\u001b[34m3. View all \u001b[33mvocabularies')
         print('\u001b[34m4. View all \u001b[33mvocabularies \u001b[34madded in a specific month')
         print('\u001b[34m5. View all \u001b[33mvocabularies \u001b[34madded in a specific year')
-        print('\u001b[31m6. Exit\n')
+        print('\u001b[34m6. \u001b[31mChange \u001b[34mmeaning of a \u001b[33mvocabulary')
+        print('\u001b[31m7. Exit\n')
 
         selected = input('\u001b[36mPlease select an option:\u001b[0m')
 
@@ -196,8 +217,10 @@ I8,        8        ,8I            88
                         print(i)
                 input_any_key()
             case '6':
+                change_meaning()
+
+            case '7':
                 flag = True
-                print('Exiting...')
                 break
             case default:
                 print('Invalid input')
@@ -206,5 +229,35 @@ I8,        8        ,8I            88
             break
         printing_underline()
 
+    print("""\u001b[36;1m
+        (
+       (_)
+       ###
+       (#c     _\|/_
+        #\     wWWWw
+        \ \-. (/. .\)
+        /\ /`\/\   /\\
+        |\/   \_) (_|
+        `\.' ; ;    ;`\\
+          `\;  ;    .  ;/\\
+            `\;    ;  ;|  \\
+             ;   .' '  ;  /
+             |_.'   ;  | /)
+             (     ''._;'`
+             |    ' . ;
+             |.-'   .:)
+             |        |
+             (  .'  : |
+             |,-  .:: |
+             | ,-'  .;|
+         jgs_/___,_.:_\_
+           [I_I_I_I_I_I_]
+           | __________ |
+           | || |  | || |
+          _| ||_|__|_|| |_
+         /=--------------=\\
+        /                  \\
+       |                    |""")
     with open('vocab_file.json', 'w') as f:
         json.dump(all_vocabs, f, default=lambda o: o.__dict__(), sort_keys=True, indent=4)
+    time.sleep(2)
