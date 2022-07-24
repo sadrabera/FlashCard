@@ -1,6 +1,7 @@
 import json
 import time
 from datetime import datetime
+import os
 
 
 class Vocabulary:
@@ -127,6 +128,7 @@ def printing_underline():
 
 
 if __name__ == '__main__':
+    os.system(" ")
     print()
     print(""" \u001b[36;1m 
                                                                                     
@@ -172,12 +174,12 @@ I8,        8        ,8I            88
 
         else:
             print('\u001b[35mHooray!! you have no vocab to review. \u001b[0m')
-        print('\u001b[34m1. Add a \u001b[31mnew\u001b[34m vocabulary')
-        print('\u001b[34m2. \u001b[31mRemove \u001b[34ma vocabulary')
-        print('\u001b[34m3. View all \u001b[33mvocabularies')
-        print('\u001b[34m4. View all \u001b[33mvocabularies \u001b[34madded in a specific month')
-        print('\u001b[34m5. View all \u001b[33mvocabularies \u001b[34madded in a specific year')
-        print('\u001b[34m6. \u001b[31mChange \u001b[34mmeaning of a \u001b[33mvocabulary')
+        print('\u001b[36m1. Add a \u001b[31mnew\u001b[36m vocabulary')
+        print('\u001b[36m2. \u001b[31mRemove \u001b[36ma vocabulary')
+        print('\u001b[36m3. View all \u001b[33mvocabularies')
+        print('\u001b[36m4. View all \u001b[33mvocabularies \u001b[36madded in a specific month')
+        print('\u001b[36m5. View all \u001b[33mvocabularies \u001b[36madded in a specific year')
+        print('\u001b[36m6. \u001b[31mChange \u001b[36mmeaning of a \u001b[33mvocabulary')
         print('\u001b[31m7. Exit\n')
 
         selected = input('\u001b[36mPlease select an option:\u001b[0m')
