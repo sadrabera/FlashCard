@@ -16,7 +16,7 @@ class Vocabulary:
         self.waiting_for_review_days = 1
 
     def __eq__(self, other):
-        return self.word == other.vocab
+        return self.word == other.word
 
     def __hash__(self):
         return hash(self.word)
