@@ -227,8 +227,8 @@ I8,        8        ,8I            88
                     printing_underline()
                     raise KeyboardInterrupt
                 case default:
-                    print('Invalid input')
-                    break
+                    print('\u001b[31mInvalid option.\u001b[0m')
+                    input_any_key()
 
     except KeyboardInterrupt:
         print("""\u001b[36;1m
