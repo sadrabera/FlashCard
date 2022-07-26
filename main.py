@@ -1,6 +1,6 @@
 import json
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 
 
@@ -22,7 +22,11 @@ class Vocabulary:
         return hash(self.word)
 
     def __str__(self):
-        return '\u001b[32mword:' + self.word + "\n" + '\u001b[33mmeaning:' + self.meaning + '\u001b[0m'
+        return '\u001b[32mword:' + self.word + "\n" + '\u001b[33mmeaning:' + self.meaning + '\u001b[0m' + "\n" + "\u001b[32mtimes used: " + str(
+            self.times_used) + "\n" + "number correct answers: " + str(
+            self.times_correct) + "\n" + "number incorrect answers: " + str(
+            self.times_incorrect) + "\n" + "review day: " + str(self.last_used_date + timedelta(
+            days=self.waiting_for_review_days))[:19] + "\n" + "added date: " + self.added_date.__str__()[:19] + "\n "
 
     def __dict__(self):
         return {'word': self.word, 'meaning': self.meaning, 'added_date': self.added_date.__str__(),
@@ -44,7 +48,7 @@ def add_vocabulary():
     else:
         all_vocabs.append(new_vocabulary)
         print("\u001b[35mVocabulary added successfully!\u001b[0m")
-    input_any_key()
+    input_Enter_key()
 
 
 def change_meaning():
@@ -53,10 +57,10 @@ def change_meaning():
         if every_vocabulary.word == word:
             every_vocabulary.meaning = input("Enter new meaning: ")
             print("\u001b[35mMeaning changed successfully!\u001b[0m")
-            input_any_key()
+            input_Enter_key()
             return
     print("\u001b[31mWord not found!\u001b[0m")
-    input_any_key()
+    input_Enter_key()
 
 
 def remove_vocabulary():
@@ -71,7 +75,7 @@ def remove_vocabulary():
         print("\u001b[35mVocabulary removed successfully!\u001b[0m")
     else:
         print("\u001b[31mVocabulary not found!\u001b[0m")
-    input_any_key()
+    input_Enter_key()
 
 
 def add_waiting_for_review_days(vocab):
@@ -116,11 +120,11 @@ def quiz():
                 print('https://translate.google.com/?sl=auto&tl=fa&text=' + every_vocabulary.word + '&op=translate')
                 print('Or English meaning here:')
                 print('https://dictionary.cambridge.org/dictionary/english/' + every_vocabulary.word)
-                input_any_key()
+                input_Enter_key()
 
 
-def input_any_key():
-    input("\n\u001b[36mPress any key to continue...\u001b[0m")
+def input_Enter_key():
+    input("\n\u001b[36mPress Enter to continue...\u001b[0m")
 
 
 def printing_underline():
@@ -200,7 +204,7 @@ I8,        8        ,8I            88
                         printing_underline()
 
                         print(i)
-                    input_any_key()
+                    input_Enter_key()
 
                 case '4':
                     print('Enter a date with year and month:')
@@ -209,7 +213,7 @@ I8,        8        ,8I            88
                         if i.added_date.strftime('%Y-%m') == date:
                             printing_underline()
                             print(i)
-                    input_any_key()
+                    input_Enter_key()
                 case '5':
                     print('Enter a year :')
                     year = input('Example: 2019\n')
@@ -218,7 +222,7 @@ I8,        8        ,8I            88
                             printing_underline()
 
                             print(i)
-                    input_any_key()
+                    input_Enter_key()
                 case '6':
                     change_meaning()
 
@@ -228,7 +232,7 @@ I8,        8        ,8I            88
                     raise KeyboardInterrupt
                 case default:
                     print('\u001b[31mInvalid option.\u001b[0m')
-                    input_any_key()
+                    input_Enter_key()
 
     except KeyboardInterrupt:
         print("""\u001b[36;1m
