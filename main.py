@@ -161,105 +161,105 @@ I8,        8        ,8I            88
     except json.decoder.JSONDecodeError:
         open('vocab_file.json', 'w').close()
 
-    while True:
-        flag = False
-        counter = 0
-        for vocabulary in all_vocabs:
-            if (datetime.now() - vocabulary.last_used_date).days >= vocabulary.waiting_for_review_days:
-                counter += 1
-        printing_underline()
-        if counter != 0:
-            print(
-                '\u001b[32m0. Take a quiz,\t\u001b[31m%d \u001b[32mvocabs \u001b[31mshould\u001b[32m be reviewed' % counter)
+    try:
+        while True:
+            flag = False
+            counter = 0
+            for vocabulary in all_vocabs:
+                if (datetime.now() - vocabulary.last_used_date).days >= vocabulary.waiting_for_review_days:
+                    counter += 1
+            printing_underline()
+            if counter != 0:
+                print(
+                    '\u001b[32m0. Take a quiz,\t\u001b[31m%d \u001b[32mvocabs \u001b[31mshould\u001b[32m be reviewed' % counter)
 
-        else:
-            print('\u001b[35mHooray!! you have no vocab to review. \u001b[0m')
-        print('\u001b[36m1. Add a \u001b[31mnew\u001b[36m vocabulary')
-        print('\u001b[36m2. \u001b[31mRemove \u001b[36ma vocabulary')
-        print('\u001b[36m3. View all \u001b[33mvocabularies')
-        print('\u001b[36m4. View all \u001b[33mvocabularies \u001b[36madded in a specific month')
-        print('\u001b[36m5. View all \u001b[33mvocabularies \u001b[36madded in a specific year')
-        print('\u001b[36m6. \u001b[31mChange \u001b[36mmeaning of a \u001b[33mvocabulary')
-        print('\u001b[31m7. Exit\n')
+            else:
+                print('\u001b[35mHooray!! you have no vocab to review. \u001b[0m')
+            print('\u001b[36m1. Add a \u001b[31mnew\u001b[36m vocabulary')
+            print('\u001b[36m2. \u001b[31mRemove \u001b[36ma vocabulary')
+            print('\u001b[36m3. View all \u001b[33mvocabularies')
+            print('\u001b[36m4. View all \u001b[33mvocabularies \u001b[36madded in a specific month')
+            print('\u001b[36m5. View all \u001b[33mvocabularies \u001b[36madded in a specific year')
+            print('\u001b[36m6. \u001b[31mChange \u001b[36mmeaning of a \u001b[33mvocabulary')
+            print('\u001b[31m7. Exit\n')
 
-        selected = input('\u001b[36mPlease select an option:\u001b[0m')
+            selected = input('\u001b[36mPlease select an option:\u001b[0m')
 
-        match selected:
-            case '0':
-                quiz()
+            match selected:
+                case '0':
+                    quiz()
 
-            case '1':
-                add_vocabulary()
+                case '1':
+                    add_vocabulary()
 
-            case '2':
-                remove_vocabulary()
+                case '2':
+                    remove_vocabulary()
 
-            case '3':
-                for i in all_vocabs:
+                case '3':
+                    for i in all_vocabs:
+                        printing_underline()
+
+                        print(i)
+                    input_any_key()
+
+                case '4':
+                    print('Enter a date with year and month:')
+                    date = input('Example: 2019-01\n')
+                    for i in all_vocabs:
+                        if i.added_date.strftime('%Y-%m') == date:
+                            printing_underline()
+                            print(i)
+                    input_any_key()
+                case '5':
+                    print('Enter a year :')
+                    year = input('Example: 2019\n')
+                    for i in all_vocabs:
+                        if i.added_date.strftime('%Y') == year:
+                            printing_underline()
+
+                            print(i)
+                    input_any_key()
+                case '6':
+                    change_meaning()
+
+                case '7':
+                    flag = True
                     printing_underline()
+                    raise KeyboardInterrupt
+                case default:
+                    print('Invalid input')
+                    break
 
-                    print(i)
-                input_any_key()
-
-            case '4':
-                print('Enter a date with year and month:')
-                date = input('Example: 2019-01\n')
-                for i in all_vocabs:
-                    if i.added_date.strftime('%Y-%m') == date:
-                        printing_underline()
-                        print(i)
-                input_any_key()
-            case '5':
-                print('Enter a year :')
-                year = input('Example: 2019\n')
-                for i in all_vocabs:
-                    if i.added_date.strftime('%Y') == year:
-                        printing_underline()
-
-                        print(i)
-                input_any_key()
-            case '6':
-                change_meaning()
-
-            case '7':
-                flag = True
-                break
-            case default:
-                print('Invalid input')
-                break
-        if flag:
-            break
-        printing_underline()
-
-    print("""\u001b[36;1m
-        (
-       (_)
-       ###
-       (#c     _\|/_
-        #\     wWWWw
-        \ \-. (/. .\)
-        /\ /`\/\   /\\
-        |\/   \_) (_|
-        `\.' ; ;    ;`\\
-          `\;  ;    .  ;/\\
-            `\;    ;  ;|  \\
-             ;   .' '  ;  /
-             |_.'   ;  | /)
-             (     ''._;'`
-             |    ' . ;
-             |.-'   .:)
-             |        |
-             (  .'  : |
-             |,-  .:: |
-             | ,-'  .;|
-         jgs_/___,_.:_\_
-           [I_I_I_I_I_I_]
-           | __________ |
-           | || |  | || |
-          _| ||_|__|_|| |_
-         /=--------------=\\
-        /                  \\
-       |                    |""")
-    with open('vocab_file.json', 'w') as f:
-        json.dump(all_vocabs, f, default=lambda o: o.__dict__(), sort_keys=True, indent=4)
-    time.sleep(2)
+    except KeyboardInterrupt:
+        print("""\u001b[36;1m
+            (
+           (_)
+           ###
+           (#c     _\|/_
+            #\     wWWWw
+            \ \-. (/. .\)
+            /\ /`\/\   /\\
+            |\/   \_) (_|
+            `\.' ; ;    ;`\\
+              `\;  ;    .  ;/\\
+                `\;    ;  ;|  \\
+                 ;   .' '  ;  /
+                 |_.'   ;  | /)
+                 (     ''._;'`
+                 |    ' . ;
+                 |.-'   .:)
+                 |        |
+                 (  .'  : |
+                 |,-  .:: |
+                 | ,-'  .;|
+             jgs_/___,_.:_\_
+               [I_I_I_I_I_I_]
+               | __________ |
+               | || |  | || |
+              _| ||_|__|_|| |_
+             /=--------------=\\
+            /                  \\
+           |                    |""")
+        with open('vocab_file.json', 'w') as f:
+            json.dump(all_vocabs, f, default=lambda o: o.__dict__(), sort_keys=True, indent=4)
+        time.sleep(2)
